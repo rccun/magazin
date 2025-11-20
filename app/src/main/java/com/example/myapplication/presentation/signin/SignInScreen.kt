@@ -1,7 +1,5 @@
 package com.example.myapplication.presentation.signin
 
-import android.widget.Toast
-import com.example.myapplication.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,32 +9,25 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myapplication.R
 import com.example.myapplication.Route
-import com.example.myapplication.domain.EmailUseCase
-import com.example.myapplication.domain.utils.EmailValidator
 
 @Composable
 fun SignInScreen(navController: NavController) {
-    //val useCase = remember { EmailUseCase }
+    val useCase = remember { EmailUseCase }
     val viewModel = viewModel { SignInViewModel() }
     val state = viewModel.state.value
 
-    val email = remember { mutableStateOf("") }
-    val passw = remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,8 +37,8 @@ fun SignInScreen(navController: NavController) {
         Text(stringResource(R.string.description), modifier = Modifier.padding(top = 23.dp))
         Text(stringResource(R.string.email), modifier = Modifier.padding(top = 64.dp))
         TextField(
-            value = email.value,
-            onValueChange = { email.value = it },
+            value = state.email,
+            onValueChange = { viewModel.onEvent(SignInEvents.OnEmailChange(it)) },
             modifier = Modifier
                 .padding(top = 4.dp)
                 .fillMaxWidth()
@@ -62,7 +53,7 @@ fun SignInScreen(navController: NavController) {
 
         Text(stringResource(R.string.password), modifier = Modifier.padding(top = 14.dp))
         TextField(
-            value = passw.value, onValueChange = { passw.value = it }, modifier = Modifier
+            value = state.password, onValueChange = { viewModel.onEvent(SignInEvents.OnPasswordChange(it)) }, modifier = Modifier
                 .padding(top = 4.dp)
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(16.dp)),

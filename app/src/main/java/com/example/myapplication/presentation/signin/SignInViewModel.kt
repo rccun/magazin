@@ -1,11 +1,8 @@
 package com.example.myapplication.presentation.signin
 
-import android.view.View
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.domain.EmailUseCase
 
 class SignInViewModel constructor(
    // private val emailUseCase : EmailUseCase
